@@ -47,7 +47,7 @@ jobs:
       id: convert
       uses: veracode/veracode-pipeline-scan-results-to-sarif@master
       with:
-        source-base-path-1: "^com/veracode:app/src/main/java/com/veracode"
+        source-base-path-1: "^com/veracode:app/src/main/java/com/veracode/verademo"
         source-base-path-2: "^WEB-INF:app/src/main/webapp/WEB-INF"
         pipeline-results-json: results.json
     - uses: github/codeql-action/upload-sarif@v2

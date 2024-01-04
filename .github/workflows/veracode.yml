@@ -23,7 +23,7 @@ jobs:
       working-directory: ./app/
       run: mvn -B package --file pom.xml
 
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v2
       with:
         name: my-artifact
         path: app/target/verademo.war
@@ -39,7 +39,7 @@ jobs:
         java-version: 1.8
     - run: java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --fail_on_severity="Very High, High" --file app/target/verademo.war
       continue-on-error: true
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v2
       with:
         name: ScanResults
         path: results.json
@@ -47,10 +47,10 @@ jobs:
       id: convert
       uses: veracode/veracode-pipeline-scan-results-to-sarif@master
       with:
-        source-base-path-1: "^com/veracode:app/src/main/java/com/veracode/verademo"
+        source-base-path-1: "^com/veracode:app/src/main/java/com/veracode"
         source-base-path-2: "^WEB-INF:app/src/main/webapp/WEB-INF"
         pipeline-results-json: results.json
-    - uses: github/codeql-action/upload-sarif@v1
+    - uses: github/codeql-action/upload-sarif@v2
       with:
         # Path to SARIF file relative to the root of the repository
         sarif_file: veracode-results.sarif
